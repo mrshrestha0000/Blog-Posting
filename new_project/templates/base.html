@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+
+</head>
+
+<body>
+    {% block search %}
+    <form action="articles/">
+        <input type="text" name="id"/>
+        <button> Submit </button> 
+    </form>
+    {% endblock search %}
+
+    <br><br><br>
+
+
+    {% block home_page %}
+    {% endblock home_page %}
+
+    {% block detail %}
+    {% endblock detail %}
+
+    {% block create %}
+    {% endblock create %}
+
+    {% block login %}
+    {% endblock login %}
+
+    {% block logout %}
+    {% endblock logout %}
+
+    {% block register %}
+    {% endblock register %}
+
+</body>

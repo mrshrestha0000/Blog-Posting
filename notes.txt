@@ -1,0 +1,21 @@
+creating a virtual env 
+    python3 -m venv (folder_name)
+
+creating a new project 
+    django-admin startproject new_project
+
+creating a new app 
+    django-admin startapp new_app_name
+
+make migrations 
+    python3 manage.py makemigrations 
+    python3 manage.py migrate
+
+
+create superuser
+    python3 manage.py createsuperuser 
+        saphal , saphal 
+
+
+
+Day 1 : https://www.youtube.com/watch?v=kd_c99cU0SM&list=PLEsfXFp6DpzRMby_cSoWTFw8zaMdTEXgL&index=11 

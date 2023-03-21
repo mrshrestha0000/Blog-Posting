@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block home_page %}
+
+<h1> Number : {{id}} </h1>
+
+<p>
+<ul> 
+    {% for x in object_list %}
+        {% if 1 == 1 %}
+            <li>id : {{x.id}}, </li>
+            <li>title : {{x.title}}, </li>
+            <li>content : {{x.content}} </li>
+            <li><a href="/articles/{{x.id}}/{{x.title}}"> LINK </a></li><br>
+        {% endif %}
+    {% endfor %} 
+
+        
+
+        <li>object_list : {{ object_list }} </li>
+        <li>id : {{id}}, </li>
+        <li>title : {{title}}, </li>
+        <li>content : {{content}} </li>
+</ul>
+</p>
+
+{% endblock home_page %}
