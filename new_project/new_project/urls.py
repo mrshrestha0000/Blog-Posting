@@ -30,7 +30,10 @@ from khalti.views import (
     movies_views,
     new_khanepani,
     counter_update,
-    bankload
+    migrate_sage_movies
+)
+from khalti.encode import (
+    encrtpt_data
 )
 
 urlpatterns = [
@@ -45,7 +48,9 @@ urlpatterns = [
     path("khalti/movies/", movies_views),
     path("khalti/new_khanepani/", new_khanepani),
     path("khalti/counter_update/", counter_update),
-    path("khalti/bankload/",bankload)
+    path("khalti/migrate_sage_movies/",migrate_sage_movies),
+    path("khalti/encrypt/",encrtpt_data)
+
     
     # path('khalti/', include("khalti.urls")),
 ]

@@ -12,46 +12,6 @@ from Crypto.Signature import PKCS1_v1_5
 
 
 # Create your views here.
-@csrf_exempt
-def bankload(request):
-    amount: request.get.POST('amount')
-    user: request.get.POST('user')
-    reference: request.get.POST('reference')
-    remarks: request.get.POST('remarks')
-    data = {
-    "nonce": "nonce",
-    "amount": amount,
-    "user": user,
-    "reference": reference,
-    "remarks": remarks
-    } 
-    print (data)
-    if request.method == "POST":
-        local_time = datetime.now() # timezone should be in Asia/Kathmandu (i.e. UTC+5:45)
-        data['nonce'] = int(local_time.timestamp())
-        key_file_path = "/home/saphal/Downloads/TestTestKumariBankLoad.pem"
-        with open(key_file_path) as fkey:
-            _key = fkey.read().replace("\\n", "\n")
-            private_key = RSA.importKey(_key)
-
-        digest = SHA256.new()
-        dump_data = json.dumps(data).encode()
-        b64data = b64encode(dump_data)
-        digest.update(b64data)
-
-        signer = PKCS1_v1_5.new(private_key)
-        signature = signer.sign(digest)
-        b64signature = b64encode(signature)
-        response = {
-        "data": b64data.decode(),
-        "signature": b64signature.decode()
-        }
-
-        print (json.dumps(response))
-        print (data['nonce'])
-
-        return JsonResponse(response, safe=False)
-        # return json.dumps(response), data['nonce']
     
 
 @csrf_exempt
@@ -60,7 +20,7 @@ def movies_views(request):
     if request.method == "POST":
         url = "https://khalti.com/api/v5/service/use/movie/search/"
         headers = {
-            "Authorization":"token 4bcb893557584c364f8e069b136d29af97440edd",
+            "Authorization":"token be0615c999596d187fd433ca8b8ff026829a7969",
             "Content-Type":"application/json"
         }
         context = {}
@@ -127,6 +87,7 @@ def new_khanepani(request):
         }
         return JsonResponse(error_message, safe=False)
     
+
 @csrf_exempt
 def counter_update(request):
     payment_code = request.POST.get('payment_code')
@@ -160,22 +121,6 @@ def counter_update(request):
                     "payment_code": validate_payment_code,
                     "service_slug":service_slug
                 }
-
-
-# from data_migration import change_softlab_to_watermark
-
-# def change_karmaiya_to_watermark():
-#     service_slug = "karmaiya-khanepani"
-#     counter_defaults = {
-#         "display_name": "Karmaiya Khanepani",
-#         "address": "Bagmati N.Pa.-11 Karmaiya, Sarlahi",
-#         "contact": "krmya",
-#         "api_username": "L!v3:K@rm!y@",
-#         "payment_code": "NP-ES-KARMAIYA",
-#     }
-#     change_softlab_to_watermark(service_slug, counter_defaults)
-
-                # return JsonResponse(log, safe=False)
                 return render(request, "khalti/khanepani.html", context=context)
                            
         error_message = {
@@ -187,8 +132,75 @@ def counter_update(request):
             "error": "Method not allowed. "
         }
         return JsonResponse(error_message, safe=False)
-
     
 
-    
+# def migrate_sage_movies(request):
+#     if request.method == "POST":
+#         # service_name = request.get.POST('service_name')
+#         url = request.POST.get('url')
+# #         # api_user_v2 = request.get.POST('api_username')
+#         token_url_v2 = request.POST.get('token_url_v2')
+#         # location_id = request.get.POST('location_id')
+#         # api_secret_v2 = request.get.POST('api_secret_v2')
+#         # api_password_v2 = request.get.POST('api_password_v2')
+#         # showinfo_url_v2 = request.get.POST('showinfo_url_v2')
+#         # deadline_obj_str = request.get.POST('deadline_obj_str')
+#         # show_list_v2_url = request.get.POST('show_list_v2_url')
+#         # deadline_obj_str = request.get.POST('deadline_obj_str')
+#         # show_list_v2_url = request.get.POST('show_list_v2_url')
+#         # movies_list_v2_url = request.get.POST('movies_list_v2_url')
+#         # seat_select_url_v2 = request.get.POST('seat_select_url_v2')
+#         # clear_selection_url_v2 = request.get.POST('clear_selection_url_v2')
+#         # download_url_v2 = request.get.POST('download_url_v2')
 
+#         a = {
+#             "url":url,
+#             "token_url_v2":token_url_v2
+#         }
+
+#         print (token_url_v2)
+#         return JsonResponse(a, self=False)
+        
+
+
+
+    
+@csrf_exempt
+def migrate_sage_movies(request):
+
+
+    if request.method == "POST":
+        service_name = request.POST.get('service_name')
+        url = request.POST.get('url')
+        api_user_v2 = request.POST.get('api_username')
+        token_url_v2 = request.POST.get('url')+'api/v1/Cinema/GetUserToken'
+        location_id = request.POST.get('location_id')
+        api_secret_v2 = request.POST.get('secret_key')
+        api_password_v2 = request.POST.get('api_password')
+        showinfo_url_v2 = request.POST.get('url')+'api/v1/Cinema/GetShowDetail'
+        deadline_obj_str = datetime.now().isoformat(timespec="minutes")
+        show_list_v2_url = request.POST.get('url')+'api/v1/Cinema/GetShowList'
+        movies_list_v2_url = request.POST.get('url')+'api/v1/Cinema/GetMovieList'
+        seat_select_url_v2 = url+'api/v1/Cinema/GetSeatSelection'
+        clear_selection_url_v2 = url+'api/v1/Cinema/ClearSelection'
+        download_url_v2 = url+'api/v1/Cinema/GetUserTicket'
+
+        a = {
+        "service_name": service_name,
+        "url": url,
+        "counter_info" : {
+            "api_user_v2": api_user_v2,    #api_username
+            "token_url_v2": token_url_v2,
+            "location_id": location_id,
+            "api_secret_v2": api_secret_v2,
+            "api_password_v2": api_password_v2,
+            "showinfo_url_v2": showinfo_url_v2,
+            "deadline_obj_str": deadline_obj_str,
+            "show_list_v2_url": show_list_v2_url,
+            "movies_list_v2_url": movies_list_v2_url,
+            "seat_select_url_v2":seat_select_url_v2,
+            "clear_selection_url_v2":clear_selection_url_v2,
+            "download_url_v2":download_url_v2
+        }
+        }
+        return JsonResponse(a, safe=False)
