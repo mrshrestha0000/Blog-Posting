@@ -20,13 +20,13 @@ def movies_views(request):
     if request.method == "POST":
         url = "https://khalti.com/api/v5/service/use/movie/search/"
         headers = {
-            "Authorization":"token be0615c999596d187fd433ca8b8ff026829a7969",
+            "Authorization":"token 163c896e61103d1773ab9686351955b5967c2f23",
             "Content-Type":"application/json"
         }
         context = {}
         response = requests.post(url, headers = headers)
 
-        print ("response:",response)
+        # print ("response:",response)
 
         movie_data = response.json()
         a = movie_data.get('movies')
@@ -35,7 +35,7 @@ def movies_views(request):
         for i in a:
             d = i.get("name")
             b.append(d)
-            print (d)
+            # print (d)
             
         return JsonResponse( {"data": b}, safe=False)
     

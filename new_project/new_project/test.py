@@ -1,15 +1,22 @@
-import json
+import json, os
+from django.conf import settings
+from django.test import TestCase
+from django.contrib.auth.password_validation import validate_password
 
-data = {
-        "displayName": "Panchdhara Mul Samrakshan Tatha Khanepani Upabhokta Samiti",
-        "address": "Panchdhara",
-        "contact": "014890787",
-        "apiUsername": "L!v3:PancHdH@ra",
-        "paymentCode": "NP-ES-PANCHADHARA",
-        "nameApi": "Panchdhara",
-        "logoPath": "watersoft.com.np/WaterTariffSystem-web/logoUpload/235_1638443979957.jpg?pfdrid_c=true",
-        "organizationType": "water"
-    } 
+class TryDjangoConfigTest (TestCase):
+    def test_abc(self):
+        try:
+            secret_key = os.environ.get('DJANGO_SECTER_KEY')
+            self.assertNotEqual(secret_key, 'abc_123')
+        except Exception as e:
+            self.fail(e)
 
-
-json.dump 
+    def test_password_strength(self):
+        try:
+            secret_key1 = os.environ.get('DJANGO_SECTER_KEY')
+            secret_key = "abc"
+            is_string = validate_password(secret_key)
+        except Exception as e:
+            message = f'Bad secret key {e.messages}'
+            self.fail(message)
+            

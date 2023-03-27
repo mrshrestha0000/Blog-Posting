@@ -1,7 +1,7 @@
 import json
 from django.http import JsonResponse
 from datetime import datetime
-from base64 import b64encode
+from base64 import b64encode, b64decode
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -24,7 +24,8 @@ def encrtpt_data(request):
 
     local_time = datetime.now() # timezone should be in Asia/Kathmandu (i.e. UTC+5:45)
     new_data['nonce'] = int(local_time.timestamp())
-    key_file_path = "/home/saphal/Desktop/MofinTestMerchantKey.pem"
+    # key_file_path = "/home/saphal/Downloads/pem_file/MofinTestMerchantKey.pem"
+    key_file_path = "/home/saphal/Downloads/pem_file/TestTestKumariBankLoad.pem"
     with open(key_file_path) as fkey:
         _key = fkey.read().replace("\\n", "\n")
         private_key = RSA.importKey(_key)
@@ -46,7 +47,8 @@ def encrtpt_data(request):
 
     return JsonResponse(response)
 
- 
+
+
 # <for account validate>
 # data = {
 #     "nonce":"0000",
@@ -93,3 +95,25 @@ def encrtpt_data(request):
 # }
 
 
+ 
+
+
+@csrf_exempt
+def decode(request):
+	data = request.POST.get('data')
+	signature = request.POST.get('signature')
+	digest = SHA256.new()
+	signature = b64decode(signature)
+	data = b64decode(data)
+	digest.update(data)
+	key_file_path = "/home/saphal/Downloads/pem_file/TestTestKumariBankLoad.pem"
+    
+	with open(key_file_path) as fkey:
+		_key = fkey.read().replace("\\n", "\n")
+		private_key = RSA.importKey(_key)
+
+	verifier = PKCS1_v1_5.new(private_key)
+    
+	is_valid = verifier.verify(digest, signature)
+	final_data = json.loads(data)
+	return JsonResponse(final_data, safe=False)

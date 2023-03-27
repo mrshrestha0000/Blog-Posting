@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
 from .views import home_view
+from .settings import STATIC_ROOT, STATIC_URL
 from articles.views import (
     article_create,
     article_detail_view,
@@ -33,7 +35,8 @@ from khalti.views import (
     migrate_sage_movies
 )
 from khalti.encode import (
-    encrtpt_data
+    encrtpt_data,
+    decode
 )
 
 urlpatterns = [
@@ -49,8 +52,6 @@ urlpatterns = [
     path("khalti/new_khanepani/", new_khanepani),
     path("khalti/counter_update/", counter_update),
     path("khalti/migrate_sage_movies/",migrate_sage_movies),
-    path("khalti/encrypt/",encrtpt_data)
-
-    
-    # path('khalti/', include("khalti.urls")),
-]
+    path("khalti/encrypt/",encrtpt_data),
+    path("khalti/decode/",decode)
+] 

@@ -1,0 +1,129 @@
+[
+    {
+        "label": "<span style='color:black'><strong><b>Personal Information</b></strong></span>", 
+        "api_key": "info0", 
+        "field_type": "info"
+    },
+
+    {
+        "label": "Name", 
+        "length": 50, 
+        "api_key": "name", 
+        "options": [], 
+        "data_api":null, 
+        "required":true, 
+        "help_text":"Enter the Full Name", 
+        "field_type":"text", 
+        "input_type":"text", 
+        "validation":
+        [
+            {
+                "pattern": "^[a-zA-Z]{1,}(?: [a-zA-Z]+){1,3}$", 
+                "error_message": "Please enter Full Name."
+            }
+        ], 
+        "multiple_error": false
+    }, 
+    {
+        "label": "Code no", 
+        "length": 100, 
+        "api_key": "code-no", 
+        "options": [], 
+        "data_api":null, 
+        "required":true, 
+        "help_text":"Enter your Code no", 
+        "field_type":"text", 
+        "input_type":"text", 
+        "validation":[], 
+        "multiple_error":false
+    }, 
+    {
+        "label": "Mobile Number", 
+        "length": 10, 
+        "api_key": "mobile_number", 
+        "options": [], 
+        "data_api":null, 
+        "required":true, 
+        "help_text":"Enter the Mobile Number", 
+        "field_type":"text", 
+        "input_type":"number", 
+        "validation":
+        [
+            {
+                "pattern": "9[678]\\d{8}$", 
+                "error_message": "Please enter the valid Mobile Number."
+            }
+        ], 
+        "multiple_error": false
+    }, 
+    {
+        "label": "Citizenship no", 
+        "length": 100, 
+        "api_key": "citizenship", 
+        "options": [], 
+        "data_api":null, 
+        "required":true, 
+        "help_text":"Enter your Citizenship no", 
+        "field_type":"text", 
+        "input_type":"text", 
+        "validation":[], 
+        "multiple_error":false
+    }, 
+    {
+        "label": "Email", 
+        "length": 50, 
+        "api_key": "email", 
+        "options": [], 
+        "data_api":null, 
+        "required":true, 
+        "help_text":"Enter the email,", 
+        "field_type":"text", 
+        "input_type":"text", 
+        "validation":[
+            {
+                "pattern": "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", 
+                "error_message": "Invalid email."
+            }
+            ], 
+        "multiple_error": false
+    }, 
+    {
+        "label": "Address", 
+        "length": 100, 
+        "api_key": "addresss", 
+        "options": [], 
+        "data_api":null, 
+        "required":true, 
+        "help_text":"Enter your Address", 
+        "field_type":"text", 
+        "input_type":"text", 
+        "validation":[], 
+        "multiple_error":false
+    }, 
+    {
+        "label": "Gender", 
+        "length": 10, 
+        "api_key": "gender", 
+        "options": [
+            {
+                "label": "Male", 
+                "value": "Male"
+            }, 
+            {
+                "label": "Female", 
+                "value": "Female"
+            }, 
+            {
+                "label": "Others", 
+                "value": "Others"
+            }
+        ], 
+        "data_api": null, 
+        "required": true, 
+        "help_text": "Choose Gender", 
+        "field_type": "dropdown", 
+        "input_type": "", 
+        "validation": [], 
+        "multiple_error":false
+    }
+]

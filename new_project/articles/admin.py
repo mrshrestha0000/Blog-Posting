@@ -5,7 +5,7 @@ from .models import Article
 # Register your models here.
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display= ['id','title','content']
+    list_display= ['id','title','slug','content','created_at','updated_at']
     search_fields= ['title', 'content']
 
 
