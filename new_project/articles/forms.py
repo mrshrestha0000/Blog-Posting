@@ -16,8 +16,11 @@ class ArticleForm(forms.ModelForm):
         return data 
 
 class ArticleFormOld(forms.Form):
+    
     title = forms.CharField()
     content = forms.CharField()
+
+
 
     def clean_title_content(self):
         cleaned_data = self.cleaned_data # dict

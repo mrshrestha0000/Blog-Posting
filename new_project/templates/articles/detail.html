@@ -5,4 +5,12 @@
 <h1>{{ title }}</h1>
 <p>{{ content }}</p>
 
+
+    
+{% csrf_token %}    
+<form action="http://127.0.0.1:8000/articles/update/{{id}}/">
+    <button type="submit">Edit Article</button>
+  </form>
+    
+
 {% endblock detail %}

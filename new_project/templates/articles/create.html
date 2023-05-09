@@ -5,7 +5,7 @@
 {% if not created %}
 
     <div style="margin-top:30px;">
-        <form action="http://127.0.0.1:8000/articles/create/" method="POST">
+        <form action="http://127.0.0.1:8000/articles/create/" method="GET">
             {% csrf_token %}
 
             {{ form.as_p }}
@@ -16,7 +16,7 @@
     </div>
 {% else %}
     <p>YOUR ARTICLE IS CREATED</p>
-    <a href="/articles/?id={{ object.id }}">{{ object.title }} - {{ object.content }}</a>
+    <a href="/articles/details/{{ object.id }}/">{{ object.title }} - {{ object.content }}</a>
 {% endif %}
 
 {% endblock create %}

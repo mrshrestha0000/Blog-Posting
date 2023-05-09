@@ -1,0 +1,4 @@
+DEFAULT_GOAL := runserver
+
+runserver:
+	python manage.py runserver

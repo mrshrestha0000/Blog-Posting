@@ -28,53 +28,49 @@ def article_create(request):
 
         slug_create(article_obj)
 
-        # data = article_obj.__dict__
-        # title = data["title"] 
-        # slug_create(title)
-        # print (title)
-        # slug = slugify(title.lower())
-        # print (slug)
-
-        # a = Article(slug = slug)
-        # a.save()
-
         return render(request, "articles/create.html" , context=context)
     else:
         return render(request, "articles/create.html" , context=context)
+
+@csrf_exempt
+def article_detail_update(request,id=None):
+    id = request.GET.get('id')
+    obj = Article.objects.get(id=id)
+    form = ArticleForm(request.POST or None, instance=obj)
+    context ={}
+    if form.is_valid():
+        form.save()
+        context['updated']=True
+        return render(request, "articles/update.html", context=context)
     
+    return HttpResponse("FAILED TO UPDATE YOUR ARTICLE")
+        
+
+@csrf_exempt
+def article_update(request,id=None,*args, **kwargs):
+            
+    if id is not None:
+        form = ArticleForm(request.POST or None)
+        context = {
+            "edit":True,
+            "form":form,
+            "id":id
+        }
+        return render(request, "articles/update.html", context=context)
+    else:
+        return HttpResponse("INVALID ID")
+
 
 def slug_create(request):
-    article = Article.objects.all()
-    print ("request",request)
-    print("article",article)
-    # slug = slugify(title.lower())
-    # print (slug)
-
-    # a = Article(slug = slug)
-    # a.save()
-
-# def article_create(request):
-
-#     form = ArticleForm(request.POST or None)
-#     context = {
-#         "form":form
-#     }
-#     if form.is_valid():
-#         article_obj = form.save()
-#         context ['form'] = ArticleForm()
-#         context['created']=True
-#         context['object']=article_obj
+    dictionary = request.__dict__
+    print ("data : ",dictionary)
+    title = dictionary.get('title')
+    slug_title = slugify(title.lower())
+    print (title)
+    Article.objects.filter(title=title).update(slug=slug_title)
 
 
-       
-#         # context = {
-#         #     "object": article_obj,
-#         #     "created": True
-#         # }
-#         return render(request, "articles/create.html" , context=context)
-#     else:
-#         return render(request, "articles/create.html" , context=context)
-                      
+
 
 # View the detail of the article
 def article_detail_view(request, id=None, *args, **kwargs):   
@@ -114,35 +110,5 @@ def article_search_view(request):
 
     return render(request, "articles/search.html", context=context)
 
-# def slug_create(request):   
-#     query_dict = request.GET #This is a dict
-#     obj = query_dict.get("title") #<input type="text" name="id"/>
-#     article_object = None
-
-#     try:
-#         obj = int(query_dict.get("title"))
-
-#     except:
-#         id = None
-#         return HttpResponse ("""<h1> Invalid search params </h1>""")
-
-#     if obj is not None:
-#         article_object = Article.objects.get(id=obj)
-
-#     context = {
-#         "search": article_object
-#     }
-
-#     return render(request, "articles/search.html", context=context)
-
-# def slug_create(request):
-#     article = Article.objects.all()
-#     print (article)
-#     article1 = request.GET
-#     print ("article1", article1)
-#     pass
-
-# slug_create()
-# id = 1
 
 

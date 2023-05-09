@@ -11,7 +11,7 @@ from Crypto.Signature import PKCS1_v1_5
 
 
 @csrf_exempt
-def encrtpt_data(request):
+def encode(request):
     
     keys = list(request.POST.keys())
 
@@ -24,6 +24,7 @@ def encrtpt_data(request):
 
     local_time = datetime.now() # timezone should be in Asia/Kathmandu (i.e. UTC+5:45)
     new_data['nonce'] = int(local_time.timestamp())
+    # new_data['nonce'] = int(1681205158)
     # key_file_path = "/home/saphal/Downloads/pem_file/MofinTestMerchantKey.pem"
     key_file_path = "/home/saphal/Downloads/pem_file/TestTestKumariBankLoad.pem"
     with open(key_file_path) as fkey:
@@ -44,7 +45,7 @@ def encrtpt_data(request):
     "signature": b64signature.decode(),
     "nonce": new_data['nonce']
     }
-
+    print (response)
     return JsonResponse(response)
 
 
@@ -106,7 +107,8 @@ def decode(request):
 	signature = b64decode(signature)
 	data = b64decode(data)
 	digest.update(data)
-	key_file_path = "/home/saphal/Downloads/pem_file/TestTestKumariBankLoad.pem"
+	key_file_path = "/home/saphal/Downloads/pem_file/MofinTestMerchantKey.pem"
+    # key_file_path = "/home/saphal/Downloads/pem_file/TestTestKumariBankLoad.pem"
     
 	with open(key_file_path) as fkey:
 		_key = fkey.read().replace("\\n", "\n")

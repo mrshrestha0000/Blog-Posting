@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block update %}
+
+{% if edit %}
+<div style="margin-top:30px;">
+    <form action="http://127.0.0.1:8000/articles/update/?id={{id}}" method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+    
+        <button type="submit">UPDATE ARTICLE</button>
+    
+    </form>
+</div>
+{% endif %}
+
+{% if updated %}
+
+Your article is updated. 
+
+{% endif %}
+
+{% endblock update %}

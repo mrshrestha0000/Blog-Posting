@@ -21,7 +21,9 @@ from .settings import STATIC_ROOT, STATIC_URL
 from articles.views import (
     article_create,
     article_detail_view,
-    article_search_view
+    article_search_view,
+    article_update,
+    article_detail_update
 )
 from accounts.views import (
     login_view,
@@ -32,26 +34,44 @@ from khalti.views import (
     movies_views,
     new_khanepani,
     counter_update,
-    migrate_sage_movies
+    migrate_sage_movies,
+    uranus
 )
 from khalti.encode import (
-    encrtpt_data,
+    encode,
     decode
+)
+from khalti.kalimati import(
+    sign_kalimati
+)
+from khalti.regex import(
+    recharge
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('', home_view),
+
     path('login/', login_view),
     path('logout/', logout_view),
     path('register/', register_view),
+
     path('articles/', article_search_view),
     path('articles/create/', article_create),
     path('articles/<int:id>/<title>', article_detail_view),
+    path('articles/details/<int:id>/', article_detail_view),
+    path('articles/update/<int:id>/',article_update),
+    path('articles/update/',article_detail_update),
+
+
     path("khalti/movies/", movies_views),
     path("khalti/new_khanepani/", new_khanepani),
     path("khalti/counter_update/", counter_update),
     path("khalti/migrate_sage_movies/",migrate_sage_movies),
-    path("khalti/encrypt/",encrtpt_data),
-    path("khalti/decode/",decode)
+    path("khalti/encode/",encode),
+    path("khalti/decode/",decode),
+    path("khalti/kalimati",sign_kalimati),
+    path("khalti/recharge",recharge),
+    path("khalti/uranus", uranus)
 ] 
